@@ -24,4 +24,7 @@ class Blog extends Model
 		return $this->belongsTo('App\Workflow','workflow_id','id');
 	}
 
+
+
+
 }
