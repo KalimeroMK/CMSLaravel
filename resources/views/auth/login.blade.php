@@ -15,7 +15,6 @@
             </div>
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/login') }}">
                 {!! csrf_field() !!}
-
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : ''}} loginbox-textbox">
                     <input type="email" class="form-control" placeholder="Email" name="email"
                            value="{{ old('email') }}"/>

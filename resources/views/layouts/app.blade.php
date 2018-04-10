@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
-
     <!--Basic Styles-->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link id="bootstrap-rtl-link" href="" rel="stylesheet"/>

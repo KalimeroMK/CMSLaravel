@@ -104,9 +104,20 @@ class CategoriesController extends Controller
 
 
         if ($input['parent_id'] == "null") {
-            $root = Category::create(['name' => $input['name'], 'slug' => $input['slug'], 'image' => $input['image'], 'decription' => $input['description']]);
+            if($request->hasFile('image')) {
+                $root = Category::create(['name' => $input['name'], 'slug' => $input['slug'], 'image' => $input['image'], 'decription' => $input['description']]);
+            }
+            else {
+                $root = Category::create(['name' => $input['name'], 'slug' => $input['slug']]);
+            }
         } else {
-            $child = Category::create(['name' => $input['name'], 'slug' => $input['slug'], 'image' => $input['image'], 'decription' => $input['description']]);
+            if($request->hasFile('image')) {
+                $child = Category::create(['name' => $input['name'], 'slug' => $input['slug'], 'image' => $input['image'], 'decription' => $input['description']]);
+            }
+            else {
+                $child = Category::create(['name' => $input['name'], 'slug' => $input['slug']]);
+            }
+
             $child->makeChildOf($input['parent_id']);
         }
 
