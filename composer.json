@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "laravelcollective/html": "^5.2",
+        "laravel/framework": "5.3.*",
+        "laravelcollective/html": "^5.3",
         "intervention/image": "^2.3",
 	"webpatser/laravel-countries": "dev-master",
 	"baum/baum": "~1.1"
