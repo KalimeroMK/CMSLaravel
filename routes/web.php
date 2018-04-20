@@ -1,7 +1,6 @@
 <?php
 
 Auth::routes();
-Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -34,12 +33,58 @@ Route::group(['middleware' => ['web', 'role:admin'], 'prefix' => 'admin'], funct
 	Route::get('/sliders/{id}/product', 'SlidersController@index')->name('admin.sliders.index');
 	Route::post('/sliders/store', 'SlidersController@store')->name('admin.sliders.store');
 	Route::post('/sliders/destroy', 'SlidersController@destroy')->name('admin.sliders.destroy');
-	Route::resource('/product', 'ProductsController');
-	Route::resource('/slider', 'SliderController');
-	Route::resource('/categories', 'CategoriesController');
-	Route::resource('/staticpage', 'StaticController');
-	Route::resource('/referrals', 'ReferralController');
-	Route::resource('/services', 'ServicesController');
+	Route::resource('/product', 'ProductsController', ['names' => [
+		'index' => 'admin.product.index',
+		'create' => 'admin.product.create',
+		'store' => 'admin.product.store',
+		'edit' => 'admin.product.edit',
+		'update' => 'admin.product.update',
+		'destroy' => 'admin.product.destroy',
+
+	]]);
+	Route::resource('/slider', 'SliderController', ['names' => [
+		'index' => 'admin.slider.index',
+		'create' => 'admin.slider.create',
+		'store' => 'admin.slider.store',
+		'edit' => 'admin.slider.edit',
+		'update' => 'admin.slider.update',
+		'destroy' => 'admin.slider.destroy',
+
+	]]);
+	Route::resource('/categories', 'CategoriesController', ['names' => [
+		'index' => 'admin.categories.index',
+		'create' => 'admin.categories.create',
+		'store' => 'admin.categories.store',
+		'edit' => 'admin.categories.edit',
+		'update' => 'admin.categories.update',
+		'destroy' => 'admin.categories.destroy',
+
+	]]);
+	Route::resource('/staticpage', 'StaticController', ['names' => [
+		'index' => 'admin.staticpage.index',
+		'create' => 'admin.staticpage.create',
+		'store' => 'admin.staticpage.store',
+		'edit' => 'admin.staticpage.edit',
+		'update' => 'admin.staticpage.update',
+		'destroy' => 'admin.staticpage.destroy',
+	]]);
+	Route::resource('/referrals', 'ReferralController', ['names' => [
+		'index' => 'admin.referrals.index',
+		'create' => 'admin.referrals.create',
+		'store' => 'admin.referrals.store',
+		'edit' => 'admin.referrals.edit',
+		'update' => 'admin.referrals.update',
+		'destroy' => 'admin.referrals.destroy',
+	]]);
+	Route::resource('/services', 'ServicesController', ['names' => [
+		'index' => 'admin.services.index',
+		'create' => 'admin.services.create',
+		'store' => 'admin.services.store',
+		'edit' => 'admin.services.edit',
+		'update' => 'admin.services.update',
+		'destroy' => 'admin.services.destroy',
+	]]);
+
 });
 //----------front end front end----------//
 Route::get('/', 'HomePageController@index');
