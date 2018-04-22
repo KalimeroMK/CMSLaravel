@@ -33,7 +33,7 @@ class DashboardController extends Controller {
 	public function listusers() {
 		$users = User::orderBy('created_at', 'asc')->paginate(10);
 		$data = ['status' => 'all', 'users' => $users];
-		return view('admin.users')->with($data);
+		return view('admin.user.users')->with($data);
 	}
 
 	public function listuser($id) {
@@ -41,17 +41,17 @@ class DashboardController extends Controller {
 
 		$data = ['status' => 'single', 'user' => $user];
 
-		return view('admin.users')->with($data);
+		return view('admin.user.users')->with($data);
 	}
 
 	public function create() {
-		return view('admin.adduser');
+		return view('admin.user.adduser');
 	}
 
 	public function edituser($id) {
 		$user = User::find($id);
 		$data = ['status' => 'edit', 'user' => $user];
-		return view('admin.edituser')->with($data);
+		return view('admin.user.edituser')->with($data);
 	}
 
 	protected function register(Request $data) {
@@ -135,6 +135,9 @@ class DashboardController extends Controller {
 		$user = User::find($id);
 		$user->delete();
 		return redirect('/admin/users');
+	}
+	public function all() {
+		return view('admin.analytics');
 	}
 
 }

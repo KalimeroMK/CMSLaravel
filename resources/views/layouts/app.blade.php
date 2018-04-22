@@ -212,6 +212,13 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/admin/analytics" class="menu">
+                        <i class="menu-icon fa fa-sort-amount-desc"></i>
+                        <span class="menu-text"> analytics </span>
+
+                    </a>
+                </li>
+                <li>
                     <a href="/admin/users" class="menu">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> Корисници </span>

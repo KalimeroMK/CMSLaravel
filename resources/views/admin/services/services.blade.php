@@ -6,7 +6,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12">
-                <p>  <a class="btn btn-labeled shiny btn-warning btn-large" href="admin/services/create"> <i class="btn-label fa fa-plus"></i>Додади Услуга </a></p>
+                <p>  <a class="btn btn-labeled shiny btn-warning btn-large" href="services/create"> <i class="btn-label fa fa-plus"></i>Додади Услуга </a></p>
             </div>
 
             <div class="col-lg-12">

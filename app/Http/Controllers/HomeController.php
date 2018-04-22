@@ -2,177 +2,162 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Workflow;
-use Illuminate\Http\Request;
 use App\Settings as Settings;
 use App\User as User;
-use Validator;
+use App\Workflow;
+use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
-use Input;
 use Session;
+use Validator;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
 
+	public function __construct() {
+		$this->middleware('auth');
+	}
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+	public function index() {
+		$settings = Settings::first();
+		$workflows = Workflow::all();
+		$users = User::all();
 
-    public function index()
-    {
-        $settings = Settings::first();
-        $workflows = Workflow::all();
-        $users = User::all();
+		$data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
+		if (empty($settings)) {
 
-        $data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
-        if (empty($settings)) {
+			return view('admin.settings.settings')->with($data);
+		} else {
+			$settings = Settings::first()->get();
+			$data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
+			return view('admin.settings.home')->with($data);
+		}
+	}
 
-            return view('admin.settings')->with($data);
-        } else {
-            $settings = Settings::first()->get();
-            $data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
-            return view('admin.home')->with($data);
-        }
-    }
+	public function store(Request $request) {
 
-    public function store(Request $request)
-    {
+		$errors = Validator::make($request->all(), [
+			'title' => 'required|max:255',
+			'description' => 'required',
+			'mainurl' => 'required',
+			'email' => 'required',
+			'address' => 'required',
+			'phone' => 'required',
+			'logo' => 'required',
+		]);
 
-        $errors = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'mainurl' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-            'logo' => 'required',
-        ]);
+		if ($errors->fails()) {
+			return redirect()->back()
+				->withErrors($errors)
+				->withInput();
+		}
 
-        if ($errors->fails()) {
-            return redirect()->back()
-                ->withErrors($errors)
-                ->withInput();
-        }
+		$input = $request->all();
 
+		if ($request->hasFile('logo')) {
 
-        $input = $request->all();
+			$image = $request->file('logo');
+			$path = public_path() . '/assets/img/logo';
+			$pathThumb = public_path() . '/assets/img/logo/thumbnails/';
+			$pathMedium = public_path() . '/assets/img/logo/medium/';
+			$ext = $image->getClientOriginalExtension();
+			$imageName = 'logo.' . $ext;
 
+			$image->move($path, $imageName);
 
-        if ($request->hasFile('logo')) {
+			$findimage = public_path() . '/assets/img/logo/' . $imageName;
+			$imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
+				$constraint->aspectRatio();
+			});
 
-            $image = $request->file('logo');
-            $path = public_path() . '/assets/img/logo';
-            $pathThumb = public_path() . '/assets/img/logo/thumbnails/';
-            $pathMedium = public_path() . '/assets/img/logo/medium/';
-            $ext = $image->getClientOriginalExtension();
-            $imageName = 'logo.' . $ext;
+			$imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
+				$constraint->aspectRatio();
+			});
 
-            $image->move($path, $imageName);
+			$imagethumb->save($pathThumb . $imageName);
+			$imagemedium->save($pathMedium . $imageName);
 
-            $findimage = public_path() . '/assets/img/logo/' . $imageName;
-            $imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+			$image = $request->imagethumb = $imageName;
+			$imagethumb = $request->image = $imageName;
+			$imagemedium = $request->image = $imageName;
 
-            $imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+			$input['logo'] = $image;
+			$input['logomedium'] = $imagemedium;
+			$input['logothumb'] = $imagethumb;
 
-            $imagethumb->save($pathThumb . $imageName);
-            $imagemedium->save($pathMedium . $imageName);
+		}
 
-            $image = $request->imagethumb = $imageName;
-            $imagethumb = $request->image = $imageName;
-            $imagemedium = $request->image = $imageName;
+		Settings::create($input);
 
-            $input['logo'] = $image;
-            $input['logomedium'] = $imagemedium;
-            $input['logothumb'] = $imagethumb;
+		Session::flash('flash_message', 'Settings successfully created!');
 
-        }
+		return redirect()->back();
+	}
 
+	public function edit($id) {
+		$settings = Settings::FindOrFail($id);
+		$workflows = Workflow::all();
+		$users = User::all();
+		$data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
+		return view('admin.settings.editsettings')->with($data);
+	}
 
-        Settings::create($input);
+	public function update(Request $request) {
 
-        Session::flash('flash_message', 'Settings successfully created!');
+		$errors = Validator::make($request->all(), [
+			'title' => 'required|max:255',
+			'description' => 'required',
+			'mainurl' => 'required',
+			'email' => 'required',
+			'address' => 'required',
+			'phone' => 'required',
+		]);
 
-        return redirect()->back();
-    }
+		if ($errors->fails()) {
+			return redirect()->back()
+				->withErrors($errors)
+				->withInput();
+		}
 
-    public function edit($id)
-    {
-        $settings = Settings::FindOrFail($id);
-        $workflows = Workflow::all();
-        $users = User::all();
-        $data = ['users' => $users, "settings" => $settings, 'workflows' => $workflows];
-        return view('admin.editsettings')->with($data);
-    }
+		$input = $request->all();
+		$settings = Settings::FindOrFail($request->id);
 
-    public function update(Request $request)
-    {
+		$settings->fill($input)->save();
 
-        $errors = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'mainurl' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-        ]);
+		if ($request->hasFile('logo')) {
 
-        if ($errors->fails()) {
-            return redirect()->back()
-                ->withErrors($errors)
-                ->withInput();
-        }
+			$image = $request->file('logo');
+			$path = public_path() . '/assets/img/logo';
+			$pathThumb = public_path() . '/assets/img/logo/thumbnails/';
+			$pathMedium = public_path() . '/assets/img/logo/medium/';
+			$ext = $image->getClientOriginalExtension();
+			$imageName = 'logo.' . $ext;
 
+			$image->move($path, $imageName);
 
-        $input = $request->all();
-        $settings = Settings::FindOrFail($request->id);
+			$findimage = public_path() . '/assets/img/logo/' . $imageName;
+			$imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
+				$constraint->aspectRatio();
+			});
 
-        $settings->fill($input)->save();
+			$imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
+				$constraint->aspectRatio();
+			});
 
-        if ($request->hasFile('logo')) {
+			$imagethumb->save($pathThumb . $imageName);
+			$imagemedium->save($pathMedium . $imageName);
 
-            $image = $request->file('logo');
-            $path = public_path() . '/assets/img/logo';
-            $pathThumb = public_path() . '/assets/img/logo/thumbnails/';
-            $pathMedium = public_path() . '/assets/img/logo/medium/';
-            $ext = $image->getClientOriginalExtension();
-            $imageName = 'logo.' . $ext;
+			$image = $request->imagethumb = $imageName;
+			$imagethumb = $request->image = $imageName;
+			$imagemedium = $request->image = $imageName;
 
-            $image->move($path, $imageName);
+			$input['logo'] = $image;
+			$input['logomedium'] = $imagemedium;
+			$input['logothumb'] = $imagethumb;
+		}
 
-            $findimage = public_path() . '/assets/img/logo/' . $imageName;
-            $imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+		$settings->fill($input)->save();
 
-            $imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+		Session::flash('flash_message', 'Settings successfully edited!');
 
-            $imagethumb->save($pathThumb . $imageName);
-            $imagemedium->save($pathMedium . $imageName);
-
-            $image = $request->imagethumb = $imageName;
-            $imagethumb = $request->image = $imageName;
-            $imagemedium = $request->image = $imageName;
-
-            $input['logo'] = $image;
-            $input['logomedium'] = $imagemedium;
-            $input['logothumb'] = $imagethumb;
-        }
-
-
-        $settings->fill($input)->save();
-
-
-        Session::flash('flash_message', 'Settings successfully edited!');
-
-        return redirect()->back();
-    }
+		return redirect()->back();
+	}
 }
