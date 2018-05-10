@@ -5,7 +5,9 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::group(['middleware' => ['web', 'role:admin'], 'prefix' => 'admin'], function () {
+    
 	Route::auth();
+	Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 	Route::get('/', 'HomeController@index');
 
 	Route::get('/users/', 'DashboardController@listusers');
