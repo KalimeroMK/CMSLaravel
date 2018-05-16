@@ -24,20 +24,20 @@
 
 
                         <div class="input-group{{ $errors->has('image') ? ' has-error' : '' }}">
-                         <span class="input-group-btn">
+                           <span class="input-group-btn">
                             <span class="btn btn-info shiny btn-file">
-                               <i class="btn-label fa fa-image"> </i> Избери слика... <input type="file"
-                               name="image">
-                           </span>
-                       </span>
-                       <input type="text" class="form-control" readonly="">
-                   </div>
-                   <br/>
-                   @if ($errors->has('image')) <p
-                   class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
+                             <i class="btn-label fa fa-image"> </i> Избери слика... <input type="file"
+                             name="image">
+                         </span>
+                     </span>
+                     <input type="text" class="form-control" readonly="">
+                 </div>
+                 <br/>
+                 @if ($errors->has('image')) <p
+                 class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
 
-                   <div class="form-group">
+                 <div class="form-group">
                     <label for="user">Уредник</label>
                     <select name="user_id" id="user" class="form-control">
                         @foreach ($users as $user)
@@ -92,6 +92,8 @@
         <div class="col-md-4">
             <input type="hidden" id="id" class="form-control" name="id"
             value="{{ $slider->id  }}">
+            {{ method_field('DELETE') }}
+
             <img src="/assets/img/sliders/medium/{{$slider->image}}" class="img-responsive"/>
 
             <button type="submit" class="btn btn-danger">Delete</button>
