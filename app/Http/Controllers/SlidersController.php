@@ -2,115 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Product as Product;
 use App\Sliders as Slider;
 use App\User as User;
-use App\Country as Country;
-use App\Category as Category;
-use App\Product as Product;
 use App\Workflow as Workflow;
-use Validator;
+use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
-use Input;
 use Session;
-use DB;
+use Validator;
 
+class SlidersController extends Controller {
 
-class SlidersController extends Controller
-{
+	public function index($id) {
+		$product   = Product::FindOrFail($id);
+		$users     = User::all();
+		$sliders   = Slider::where('product_id', '=', $id)->get();
+		$workflows = Workflow::orderBy('id', 'desc')->get();
+		$data      = ['workflows' => $workflows, 'sliders' => $sliders, "users" => $users, "product" => $product];
 
-    public function index($id)
-    {
-        $product = Product::FindOrFail($id);
-        $users = User::all();
-        $sliders = Slider::where('product_id','=',$id)->get();
-        $workflows = Workflow::orderBy('id', 'desc')->get();
-        $data = ['workflows' => $workflows, 'sliders' => $sliders, "users" => $users, "product" => $product];
+		return view('admin.slider.addsliders')->with($data);
+	}
 
-        return view('admin.addsliders')->with($data);
-    }
+	public function store(Request $request) {
+		$errors = Validator::make($request->all(), [
+				'image' => 'required',
+			]);
 
+		if ($errors       ->fails()) {
+			return redirect()->back()
+			                 ->withErrors($errors)
+			                 ->withInput();
+		}
 
+		$input = $request->all();
 
-    public function store(Request $request)
-    {
-        $errors = Validator::make($request->all(), [
-            'image' => 'required',
-        ]);
+		if ($request->hasFile('image')) {
 
-        if ($errors->fails()) {
-            return redirect()->back()
-                ->withErrors($errors)
-                ->withInput();
-        }
+			$image      = $request->file('image');
+			$path       = public_path().'/assets/img/sliders';
+			$pathThumb  = public_path().'/assets/img/sliders/thumbnails/';
+			$pathMedium = public_path().'/assets/img/sliders/medium/';
+			$ext        = $image->getClientOriginalExtension();
 
+			$imageName = rand(1003332, 1003332443434).'.'.strtolower($ext);
 
-        $input = $request->all();
+			$image->move($path, $imageName);
 
+			$findimage  = public_path().'/assets/img/sliders/'.$imageName;
+			$imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
+					$constraint->aspectRatio();
+				});
 
+			$imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
+					$constraint->aspectRatio();
+				});
 
-        if ($request->hasFile('image')) {
+			$imagethumb->save($pathThumb.$imageName);
+			$imagemedium->save($pathMedium.$imageName);
 
-            $image = $request->file('image');
-            $path = public_path() . '/assets/img/sliders';
-            $pathThumb = public_path() . '/assets/img/sliders/thumbnails/';
-            $pathMedium = public_path() . '/assets/img/sliders/medium/';
-            $ext = $image->getClientOriginalExtension();
+			$image       = $request->imagethumb       = $imageName;
+			$imagethumb  = $request->image  = $imageName;
+			$imagemedium = $request->image = $imageName;
 
+			$input['image']       = $image;
+			$input['imagemedium'] = $imagemedium;
+			$input['imagethumb']  = $imagethumb;
 
-            $imageName =  rand(1003332,1003332443434) . '.' . strtolower($ext);
+		}
 
+		Slider::create($input);
 
-            $image->move($path, $imageName);
+		Session::flash('flash_message', 'Slider image successfully created!');
 
-            $findimage = public_path() . '/assets/img/sliders/' . $imageName;
-            $imagethumb = Image::make($findimage)->resize(200, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+		return redirect()->back();
+	}
 
-            $imagemedium = Image::make($findimage)->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+	public function destroy(Request $request) {
+		$slider = Slider::FindOrFail($request['id']);
 
-            $imagethumb->save($pathThumb . $imageName);
-            $imagemedium->save($pathMedium . $imageName);
+		// Delete blog images
+		$image       = public_path().'/assets/img/sliders/'.$slider->image;
+		$imagemedium = public_path().'/assets/img/sliders/medium/'.$slider->image;
+		$imagethumb  = public_path().'/assets/img/sliders/thumbnails/'.$slider->image;
 
-            $image = $request->imagethumb = $imageName;
-            $imagethumb = $request->image = $imageName;
-            $imagemedium = $request->image = $imageName;
+		unlink($image);
+		unlink($imagemedium);
+		unlink($imagethumb);
 
-            $input['image'] = $image;
-            $input['imagemedium'] = $imagemedium;
-            $input['imagethumb'] = $imagethumb;
-
-        }
-
-
-        Slider::create($input);
-
-        Session::flash('flash_message', 'Slider image successfully created!');
-
-        return redirect()->back();
-    }
-
-
-
-    public function destroy(Request $request)
-    {
-        $slider = Slider::FindOrFail($request['id']);
-
-        // Delete blog images
-        $image = public_path() . '/assets/img/sliders/' . $slider->image;
-        $imagemedium = public_path() . '/assets/img/sliders/medium/' . $slider->image;
-        $imagethumb = public_path() . '/assets/img/sliders/thumbnails/' . $slider->image;
-
-        unlink($image);
-        unlink($imagemedium);
-        unlink($imagethumb);
-
-        $slider->delete();
-        return redirect()->back();
-    }
+		$slider->delete();
+		return redirect()->back();
+	}
 }
