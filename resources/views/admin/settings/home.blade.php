@@ -2,363 +2,337 @@
 
 
 @section('content')
-    <div class="page-body">
-        <div class="row">
-            <div class="col-lg-12">
+<div class="page-body">
+    <div class="row">
+        <div class="col-md-12">
 
-                @if(Session::has('flash_message'))
-                    <div class="alert alert-success">
-                        {{ Session::get('flash_message') }}
-                    </div>
-                @endif
-                @foreach($settings as $setting)
-                <p><a class="btn btn-labeled shiny btn-warning btn-large" href="/admin/settings/{{ $setting->id }}/edit"> <i
-                                class="btn-label fa fa-plus"></i>Подесувања </a></p>
-                    @endforeach
+            @if(Session::has('flash_message'))
+            <div class="alert alert-success">
+                {{ Session::get('flash_message') }}
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Главна адреса</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->mainurl }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Наслов</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->title }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Email адреса</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->email }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Адреса</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->address }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Logo</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                <img src="/assets/img/logo/{{ $setting->logo }}" class="img-responsive"/>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Опис</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {!! $setting->description !!}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Телефон</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->phone }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Facebook</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->facebook != NULL)
-                                    {{ $setting->facebook }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Мапа</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            <div id="map-canvas"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Twitter</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->twitter != NULL)
-                                    {{ $setting->twitter }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Skype</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->skype != NULL)
-                                    {{ $setting->skype }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">LinkedIn</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->linkedin != NULL)
-                                    {{ $setting->linkedin }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Google Plus</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->gplus != NULL)
-                                    {{ $setting->gplus }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Youtube</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->youtube != NULL)
-                                    {{ $setting->youtube }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Flickr</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->flickr != NULL)
-                                    {{ $setting->flickr }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Pinterest</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                @if($setting->pinterest != NULL)
-                                    {{ $setting->pinterest }}
-
-                                @else
-                                    n/a
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="widget">
-                    <div class="widget-header bordered-bottom bordered-themesecondary">
-                        <i class="widget-icon fa fa-tags themesecondary"></i>
-                        <span class="widget-caption themesecondary">Последни промени</span>
-                    </div><!--Widget Header-->
-                    <div class="widget-body  no-padding">
-                        <div class="tickets-container">
-                            @foreach($settings as $setting)
-                                {{ $setting->updated_at->diffForHumans() }}
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-@endsection
-
-    @section('scripts')
-        <!-- Google Maps -->
-            <script type="text/javascript"
-                    src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAsNNbnqvbIiRo2hBpr3-lvmYxm3ISPtWI"></script>
-
-            <script>
-                @foreach($settings as $setting)
-
-                        $(document).ready(function () {
-// Google Maps
-
-                    map = new google.maps.Map(document.getElementById('map-canvas'), {
-                        center: {lat: {{ $setting->lat }}, lng: {{ $setting->lng }} },
-                        zoom: 15
-                    });
-
-                    var marker = new google.maps.Marker({
-                        position: {lat: {{ $setting->lat }}, lng: {{ $setting->lng }} },
-                        map: map,
-                        draggable: false
-                    });
-
-                });
+            @endif
+            @foreach($settings as $setting)
+            <p><a class="btn btn-labeled shiny btn-warning btn-large" href="/admin/settings/{{ $setting->id }}/edit"> <i
+                class="btn-label fa fa-plus"></i>Подесувања </a></p>
                 @endforeach
-            </script>
+            </div>
+        </div>
+        <div class="row"> <!-- /# card1 -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-title">
+                        <p>Главна адреса</p>
+                    </div>
+                    <hr/>
+                    <div class="media">
+
+                     @foreach($settings as $setting)
+                     {{ $setting->mainurl }}
+                     @endforeach
+
+                 </div>
+
+             </div>
+
+         </div>
+         <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <p>Наслов</p>
+                </div>
+                <hr/>
+                <div class="media">
+                    @foreach($settings as $setting)
+                    {{ $setting->title }}
+                    @endforeach
+
+                </div>
+
+            </div>
+
+        </div>
+    </div> <!-- /# card1 -->
+
+    <div class="row"> <!-- /# card2 -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <p>Email адреса</p>
+                </div>
+                <hr/>
+                <div class="media">
+
+                    @foreach($settings as $setting)
+                    {{ $setting->email }}
+                    @endforeach
+
+                </div>
+
+            </div>
+            <!-- /# card -->
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <p>Адреса</p>
+                </div>
+                <hr/>
+                <div class="media">
+                    @foreach($settings as $setting)
+                    {{ $setting->address }}
+                    @endforeach
+
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- /# card2 -->
+    <div class="row"> <!-- /# card3 -->
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-title">
+                    <p>Logo</p>
+                </div>
+                <hr/>
+                <div class="media">
+
+                 @foreach($settings as $setting)
+                 <img src="/assets/img/logo/{{ $setting->logo }}" class="img-responsive"/>
+                 @endforeach
+             </div>
+
+         </div>
+
+     </div>
+     <div class="col-lg-6">
+        <div class="card">
+            <div class="card-title">
+                <p>Опис</p>
+            </div>
+            <hr/>
+            <div class="media">
+                @foreach($settings as $setting)
+                {!! $setting->description !!}
+                @endforeach
+            </div>
+
+        </div>
+
+    </div>
+</div> <!-- /# card3 -->
+<div class="row"> <!-- /# card4 -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-title">
+                <p>Телефон</p>
+            </div>
+            <hr/>
+            <div class="media">
+               @foreach($settings as $setting)
+               {{ $setting->phone }}
+               @endforeach
+           </div>
+
+       </div>
+
+   </div>
+   <div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Facebook</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->facebook != NULL)
+            {{ $setting->facebook }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+</div> <!-- /# card4 -->
+
+<style>
+#map {
+    height: 400px;
+    width: 100%;
+}
+</style>
+
+<div id="map"></div>
+<script>
+    @foreach($settings as $setting)
+    function initMap() {
+        var uluru = {lat: {{ $setting->lat }}, lng: {{ $setting->lng }} };
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+      });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+      });
+    }
+    @endforeach
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7va0UZbX2kdZmcLseEqlADHNmUf9YOGs&callback=initMap">
+</script>
+
+<div class="row">
+ <div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Twitter</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->twitter != NULL)
+            {{ $setting->twitter }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Skype</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->skype != NULL)
+            {{ $setting->skype }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<div class="row">
+ <div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>G-plus</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->gplus != NULL)
+            {{ $setting->gplus }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Youtube</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->youtube != NULL)
+            {{ $setting->youtube }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+</div>
+<div class="row">
+ <div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Flicker</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->flicker != NULL)
+            {{ $setting->flicker }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-title">
+            <p>Pinterest</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            @if($setting->pinterest != NULL)
+            {{ $setting->pinterest }}
+
+            @else
+            n/a
+            @endif
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+</div>
+<div class="row">
+ <div class="col-lg-12">
+    <div class="card">
+        <div class="card-title">
+            <p>Последни промени</p>
+        </div>
+        <hr/>
+        <div class="media">
+            @foreach($settings as $setting)
+            {{ $setting->updated_at->diffForHumans() }}
+            @endforeach
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</div>
+
 @endsection
+
+

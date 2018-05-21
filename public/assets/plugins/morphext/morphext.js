@@ -10,7 +10,7 @@
  * http://ian.mit-license.org/
  */
 
-/*eslint-env browser */
+/*eslint-.env browser */
 /*global jQuery:false */
 /*eslint-disable no-underscore-dangle */
 

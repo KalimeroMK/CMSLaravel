@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\User as User;
 
 use Hash;
-
+use LaravelAnalytics;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\File;
 use Input;
 use Intervention\Image\ImageManagerStatic as Image;
 use Session;
 use Validator;
+use Date;
+
+
+
 
 class DashboardController extends Controller {
 
@@ -143,5 +145,9 @@ class DashboardController extends Controller {
 		$user->delete();
 		return redirect('/admin/users');
 	}
-
+    public function analytics() {
+      
+        return view('admin.analytics');
+    }
+   
 }

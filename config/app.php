@@ -9,11 +9,11 @@ return [
 		      |
 		      | This value determines the "environment" your application is currently
 		      | running in. This may determine how you prefer to configure various
-		      | services your application utilizes. Set this in your ".env" file.
+		      | services your application utilizes. Set this in your "..env" file.
 		      |
 	*/
 
-	'env' => env('APP_ENV', 'production'),
+	'.env' => env('APP_ENV', 'production'),
 	/*
 		      |--------------------------------------------------------------------------
 		      | Application Debug Mode
@@ -141,6 +141,9 @@ return [
 		Collective\Html\HtmlServiceProvider::class,
 		Webpatser\Countries\CountriesServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
+        Way\Generators\GeneratorsServiceProvider::class,
+        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+        Spatie\Analytics\AnalyticsServiceProvider::class,
 
 	],
 	/*
@@ -190,6 +193,8 @@ return [
 		'Input' => Illuminate\Support\Facades\Input::class,
 		'Countries' => Webpatser\Countries\CountriesFacade::class,
 		'Baum' => Baum\Providers\BaumServiceProvider::class,
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
 
-	],
+
+    ],
 ];

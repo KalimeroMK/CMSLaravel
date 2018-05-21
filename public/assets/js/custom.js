@@ -1,85 +1,44 @@
+/*
+ * Version: 2.1
+ */
 
+// Notify Plugin - Code for the demo site of HtmlCoder
+// You can delete the code below
+//-----------------------------------------------
+(function($) {
 
+	"use strict";
 
-$(document).ready( function() {
-	$(document).on('change', '.btn-file :file', function() {
-		var input = $(this),
-		numFiles = input.get(0).files ? input.get(0).files.length : 1,
-		label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-		input.trigger('fileselect', [numFiles, label]);
-	});
+	$(document).ready(function() {
+		if (($(".main-navigation.onclick").length>0) && $(window).width() > 991 ){
+			$.notify({
+				// options
+				message: 'The Dropdowns of the Main Menu, are now open with click on Parent Items. Click "Home" to checkout this behavior.'
+			},{
+				// settings
+				type: 'info',
+				delay: 10000,
+				offset : {
+					y: 150,
+					x: 20
+				}
+			});
+		};
+		if (!($(".main-navigation.animated").length>0) && $(window).width() > 991 && $(".main-navigation").length>0){
+			$.notify({
+				// options
+				message: 'The animations of main menu are disabled.'
+			},{
+				// settings
+				type: 'info',
+				delay: 10000,
+				offset : {
+					y: 150,
+					x: 20
+				}
+			}); // End Notify Plugin - The above code (from line 14) is used for demonstration purposes only
 
+		};
+	}); // End document ready
 
-	$('#deleteuser').click(function(e) {
-		e.preventDefault();
-		var msg = 'Are you sure?';
-		bootbox.confirm(msg, function(result) {
-			if (result) {
-				$('#deleteuser').submit();
-			}
-		});
-	});
-
-
-
-	$('#deleteproduct').click(function(e) {
-		e.preventDefault();
-		var msg = 'Are you sure?';
-		bootbox.confirm(msg, function(result) {
-			if (result) {
-				$('#deleteproduct').submit();
-			}
-		});
-	});
-
-	$('#deletecategory').click(function(e) {
-		e.preventDefault();
-		var msg = 'Are you sure?';
-		bootbox.confirm(msg, function(result) {
-			if (result) {
-				$('#deletecategory').submit();
-			}
-		});
-	});
-
-	$('#deletesourcepartner').click(function(e) {
-		e.preventDefault();
-		var msg = 'Are you sure?';
-		bootbox.confirm(msg, function(result) {
-			if (result) {
-				$('#deletesourcepartner').submit();
-			}
-		});
-	});
-
-		$('#deleteblog').click(function(e) {
-		e.preventDefault();
-		var msg = 'Are you sure?';
-		bootbox.confirm(msg, function(result) {
-			if (result) {
-				$('#deleteblog').submit();
-			}
-		});
-	});
-
-
-});
-
-
-
-
-$(document).ready( function() {
-	$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-		
-		var input = $(this).parents('.input-group').find(':text'),
-		log = numFiles > 1 ? numFiles + ' files selected' : label;
-		
-		if( input.length ) {
-			input.val(log);
-		} else {
-			if( log ) alert(log);
-		}
-		
-	});
-});
-
+})(jQuery);

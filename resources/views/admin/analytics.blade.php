@@ -1,132 +1,84 @@
 @extends('layouts.app')
-
 @section('scripts')
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Embed API Demo</title>
+</head>
+<body>
 
- <script>
-(function(w,d,s,g,js,fs){
-  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
-  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
-  js.src='https://apis.google.com/js/platform.js';
-  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
-}(window,document,'script'));
-</script>
+  <!-- Step 1: Create the containing elements. -->
 
-<script>
+  <section id="auth-button"></section>
+  <section id="view-selector"></section>
+  <section id="timeline"></section>
 
-gapi.analytics.ready(function() {
+  <!-- Step 2: Load the library. -->
 
-  /**
-   * Authorize the user immediately if the user has already granted access.
-   * If no access has been created, render an authorize button inside the
-   * element with the ID "embed-api-auth-container".
-   */
+  <script>
+    (function(w,d,s,g,js,fjs){
+      g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
+      js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
+      js.src='https://apis.google.com/js/platform.js';
+      fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
+    }(window,document,'script'));
+  </script>
+
+  <script>
+    gapi.analytics.ready(function() {
+
+  // Step 3: Authorize the user.
+
+  var CLIENT_ID = '{{env('GOOGLE_ANALYTICS_CLIENT_ID')}}';
+
   gapi.analytics.auth.authorize({
-    container: 'embed-api-auth-container',
-    clientid: '{{env('GOOGLE_ANALYTICS_CLIENT_ID')}}'
+    container: 'auth-button',
+    clientid: CLIENT_ID,
   });
 
+  // Step 4: Create the view selector.
 
-  /**
-   * Create a ViewSelector for the first view to be rendered inside of an
-   * element with the id "view-selector-1-container".
-   */
-  var viewSelector1 = new gapi.analytics.ViewSelector({
-    container: 'view-selector-1-container'
+  var viewSelector = new gapi.analytics.ViewSelector({
+    container: 'view-selector'
   });
 
-  /**
-   * Create a ViewSelector for the second view to be rendered inside of an
-   * element with the id "view-selector-2-container".
-   */
-  var viewSelector2 = new gapi.analytics.ViewSelector({
-    container: 'view-selector-2-container'
-  });
+  // Step 5: Create the timeline chart.
 
-  // Render both view selectors to the page.
-  viewSelector1.execute();
-  viewSelector2.execute();
-
-
-  /**
-   * Create the first DataChart for top countries over the past 30 days.
-   * It will be rendered inside an element with the id "chart-1-container".
-   */
-  var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+  var timeline = new gapi.analytics.googleCharts.DataChart({
+    reportType: 'ga',
     query: {
-      metrics: 'ga:sessions',
-      dimensions: 'ga:country',
+      'dimensions': 'ga:date',
+      'metrics': 'ga:sessions',
       'start-date': '30daysAgo',
       'end-date': 'yesterday',
-      'max-results': 6,
-      sort: '-ga:sessions'
     },
     chart: {
-      container: 'chart-1-container',
-      type: 'PIE',
-      options: {
-        width: '100%',
-        pieHole: 4/9
-      }
+      type: 'LINE',
+      container: 'timeline'
     }
   });
 
+  // Step 6: Hook up the components to work together.
 
-  /**
-   * Create the second DataChart for top countries over the past 30 days.
-   * It will be rendered inside an element with the id "chart-2-container".
-   */
-  var dataChart2 = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      metrics: 'ga:sessions',
-      dimensions: 'ga:country',
-      'start-date': '30daysAgo',
-      'end-date': 'yesterday',
-      'max-results': 6,
-      sort: '-ga:sessions'
-    },
-    chart: {
-      container: 'chart-2-container',
-      type: 'PIE',
-      options: {
-        width: '100%',
-        pieHole: 4/9
+  gapi.analytics.auth.on('success', function(response) {
+    viewSelector.execute();
+  });
+
+  viewSelector.on('change', function(ids) {
+    var newIds = {
+      query: {
+        ids: ids
       }
     }
+    timeline.set(newIds).execute();
   });
-
-  /**
-   * Update the first dataChart when the first view selecter is changed.
-   */
-  viewSelector1.on('change', function(ids) {
-    dataChart1.set({query: {ids: ids}}).execute();
-  });
-
-  /**
-   * Update the second dataChart when the second view selecter is changed.
-   */
-  viewSelector2.on('change', function(ids) {
-    dataChart2.set({query: {ids: ids}}).execute();
-  });
-
 });
 </script>
-@stop
+</body>
+</html>
+@endsection
 
 @section('content')
 
 
-
-    <!-- END PAGE HEADER-->
-    <!-- BEGIN PAGE CONTENT-->
-    <div class="row">
-        <div class="col-md-12">
-            <!-- BEGIN PORTLET-->
-            <div id="embed-api-auth-container"></div>
-<div id="chart-1-container"></div>
-<div id="chart-2-container"></div>
-<div id="view-selector-1-container"></div>
-<div id="view-selector-2-container"></div>
-            <!-- END PORTLET-->
-        </div>
-    </div>
-@stop
+@endsection

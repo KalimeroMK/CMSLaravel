@@ -11,23 +11,40 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
 
-    <!--Basic Styles-->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+   <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
 
-    <!--Fonts-->
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
-    <!--Beyond styles-->
-    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" />
-    <link href="/assets/css/demo.min.css" rel="stylesheet" />
-    <link href="/assets/css/skins/orange.min.css" rel="stylesheet" />
-    <link href="/assets/css/animate.min.css" rel="stylesheet" />
-    <link href="/assets/css/custom.css" rel="stylesheet" />
-    <link id="skin-link" href="/assets/css/skins/orange.css" rel="application/javascript" type="text/css" />
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="/assets/js/skins.min.js"></script>
+    <!-- Font Awesome CSS -->
+    <link href="fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="/assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="/assets/plugins/rs-plugin-5/css/settings.css" rel="stylesheet">
+    <link href="/assets/plugins/rs-plugin-5/css/layers.css" rel="stylesheet">
+    <link href="/assets/plugins/rs-plugin-5/css/navigation.css" rel="stylesheet">
+    <link href="/assets/css/animations.css" rel="stylesheet">
+    <link href="/assets/plugins/slick/slick.css" rel="stylesheet">
+    
+    <!-- The Project's core CSS file -->
+    <!-- Use css/rtl_style.css for RTL version -->
+    <link href="/assets/css/style.css" rel="stylesheet" >
+    <!-- The Project's Typography CSS file, includes used fonts -->
+    <!-- Used font for body: Roboto -->
+    <!-- Used font for headings: Raleway -->
+    <!-- Use css/rtl_typography-default.css for RTL version -->
+    <link href="/assets/css/typography-default.css" rel="stylesheet" >
+    <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
+    <link href="/assets/css/skins/light_blue.css" data-style="styles-no-cookie" rel="stylesheet">
+    <link href="/assets/style-switcher/style-switcher.css" rel="stylesheet">
+
+    <!-- Custom css -->
+    <link href="/assets/css/custom.css" rel="stylesheet">
 
 </head>
 <!--Head Ends-->

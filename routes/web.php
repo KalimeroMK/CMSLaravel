@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web', 'role:admin'], 'prefix' => 'admin'], funct
 		Route::post('/users/updateuser', 'DashboardController@updateuser');
 		Route::post('/users/{id}/delete', 'DashboardController@delete');
 		Route::post('/users/register', 'DashboardController@register');
-		Route::get('/analytics', 'DashboardController@all');
+		Route::get('/analytics', 'DashboardController@analytics');
 
 		Route::get('/sliders/{id}/category', 'CategoriesController@addslider')->name('admin.addcategoryslider.index');
 		Route::post('/addcategorystore', 'CategoriesController@sliderstore')->name('admin.slidercategory.store');

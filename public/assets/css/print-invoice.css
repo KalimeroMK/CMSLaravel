@@ -1,13 +1,8 @@
+@charset "UTF-8";
 /*
-Theme Name: The Project - Responsive Website Template
-Author: HtmlCoder
-Author URI: http://www.htmlcoder.me
-Author e-mail: htmlcoder.me@gmail.com
-Version: 1.2.0
-Created: May 2015
-License URI: http://support.wrapbootstrap.com/
-File Description: CSS rules for invoice print
-*/
+ * Version: 2.1
+ * File Description: CSS rules for invoice print
+ */
 
 .header-top,
 .header,
@@ -23,14 +18,14 @@ File Description: CSS rules for invoice print
 	display: none!important;
 }
 
-.col-sm-offset-3 {
+.offset-md-3 {
 	margin-left: 25%;
 }
-.col-sm-3 {
+.col-md-3 {
 	width: 25%;
 	float: left;
 }
-.col-sm-6 {
+.col-md-6 {
 	width: 50%;
 	float: left;
 }

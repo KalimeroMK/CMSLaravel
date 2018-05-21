@@ -1,16 +1,17 @@
-(function($){
-	$(document).ready(function(){
-		// Set the time at which the countdown expires.
-		// var untilDate new Date(Year, Month - 1, Day)
-		//-----------------------------------------------
-		var untilDate = new Date(2017, 2 - 1, 1);
+(function($) {
 
-		$(".countdown").countdown({
-			until: untilDate, 
-			format: 'dHMS',
-			padZeroes: true
+	"use strict";
+
+	$(document).ready(function() {
+
+		$('.countdown').countdown('2019/10/10', function(event) {
+		$(this).html(event.strftime('' +
+			'<span class="countdown-section"><span class="countdown-amount">%D</span> <span class="countdown-period">days</span></span> ' +
+			'<span class="countdown-section"><span class="countdown-amount">%H</span> <span class="countdown-period">hours</span></span> ' +
+			'<span class="countdown-section"><span class="countdown-amount">%M</span> <span class="countdown-period">minutes</span></span> ' +
+			'<span class="countdown-section"><span class="countdown-amount">%S</span> <span class="countdown-period">seconds</span></span>'));
 		});
 
 	}); // End document ready
 
-})(this.jQuery);
+})(jQuery);
