@@ -16,6 +16,7 @@
                 <div class="widget-header bordered-bottom bordered-warning">
                     <span class="widget-caption">Додади слика во слајдер</span>
                 </div>
+                <br>
                 <div class="widget-body">
                     <div id="horizontal-form">
 
@@ -24,20 +25,19 @@
 
 
                         <div class="input-group{{ $errors->has('image') ? ' has-error' : '' }}">
-                           <span class="input-group-btn">
-                            <span class="btn btn-info shiny btn-file">
-                             <i class="btn-label fa fa-image"> </i> Избери слика... <input type="file"
-                             name="image">
-                         </span>
-                     </span>
-                     <input type="text" class="form-control" readonly="">
-                 </div>
-                 <br/>
-                 @if ($errors->has('image')) <p
-                 class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
+                           <span>
+                            <span class=" btn-file">
+                              Избери слика... <input type="file"
+                              name="image">
+                          </span>
+                      </span>
+                  </div>
+                  <br/>
+                  @if ($errors->has('image')) <p
+                  class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
 
-                 <div class="form-group">
+                  <div class="form-group">
                     <label for="user">Уредник</label>
                     <select name="user_id" id="user" class="form-control">
                         @foreach ($users as $user)

@@ -12,7 +12,7 @@
             </div>
             @endif
             @foreach($settings as $setting)
-            <p><a class="btn btn-labeled shiny btn-warning btn-large" href="/admin/settings/{{ $setting->id }}/edit"> <i
+            <p><a class="btn btn-labeled " href="/admin/settings/{{ $setting->id }}/edit"> <i
                 class="btn-label fa fa-plus"></i>Подесувања </a></p>
                 @endforeach
             </div>
@@ -26,16 +26,16 @@
                     <hr/>
                     <div class="media">
 
-                     @foreach($settings as $setting)
-                     {{ $setting->mainurl }}
-                     @endforeach
+                       @foreach($settings as $setting)
+                       {{ $setting->mainurl }}
+                       @endforeach
 
-                 </div>
+                   </div>
 
-             </div>
+               </div>
 
-         </div>
-         <div class="col-lg-6">
+           </div>
+           <div class="col-lg-6">
             <div class="card">
                 <div class="card-title">
                     <p>Наслов</p>
@@ -96,15 +96,15 @@
                 <hr/>
                 <div class="media">
 
-                 @foreach($settings as $setting)
-                 <img src="/assets/img/logo/{{ $setting->logo }}" class="img-responsive"/>
-                 @endforeach
-             </div>
+                   @foreach($settings as $setting)
+                   <img src="/assets/img/logo/{{ $setting->logo }}" class="img-responsive"/>
+                   @endforeach
+               </div>
 
-         </div>
+           </div>
 
-     </div>
-     <div class="col-lg-6">
+       </div>
+       <div class="col-lg-6">
         <div class="card">
             <div class="card-title">
                 <p>Опис</p>
@@ -128,15 +128,15 @@
             </div>
             <hr/>
             <div class="media">
-               @foreach($settings as $setting)
-               {{ $setting->phone }}
-               @endforeach
-           </div>
+             @foreach($settings as $setting)
+             {{ $setting->phone }}
+             @endforeach
+         </div>
 
-       </div>
+     </div>
 
-   </div>
-   <div class="col-lg-6">
+ </div>
+ <div class="col-lg-6">
     <div class="card">
         <div class="card-title">
             <p>Facebook</p>
@@ -187,7 +187,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7va0UZbX2kdZmcLseEqlADHN
 </script>
 
 <div class="row">
- <div class="col-lg-6">
+   <div class="col-lg-6">
     <div class="card">
         <div class="card-title">
             <p>Twitter</p>
@@ -230,7 +230,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7va0UZbX2kdZmcLseEqlADHN
 </div>
 
 <div class="row">
- <div class="col-lg-6">
+   <div class="col-lg-6">
     <div class="card">
         <div class="card-title">
             <p>G-plus</p>
@@ -272,7 +272,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7va0UZbX2kdZmcLseEqlADHN
 </div>
 </div>
 <div class="row">
- <div class="col-lg-6">
+   <div class="col-lg-6">
     <div class="card">
         <div class="card-title">
             <p>Flicker</p>
@@ -314,7 +314,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7va0UZbX2kdZmcLseEqlADHN
 </div>
 </div>
 <div class="row">
- <div class="col-lg-12">
+   <div class="col-lg-12">
     <div class="card">
         <div class="card-title">
             <p>Последни промени</p>

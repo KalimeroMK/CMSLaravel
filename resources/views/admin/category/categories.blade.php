@@ -11,7 +11,7 @@
                 {{ Session::get('flash_message') }}
             </div>
             @endif
-            <p><a class="btn btn-labeled shiny btn-warning btn-large" href="/admin/categories/create"> <i
+            <p><a class="btn btn-labeled " href="/admin/categories/create"> <i
                 class="btn-label fa fa-plus"></i>Додади категорија </a></p>
             </div>
             <div class="col-lg-12">
