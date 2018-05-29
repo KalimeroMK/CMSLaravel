@@ -12,7 +12,8 @@
         "webpatser/laravel-countries": "dev-master",
         "baum/baum": "~1.1",
         "ckeditor/ckeditor": "^4.9",
-        "spatie/laravel-analytics": "^3.6"
+        "spatie/laravel-analytics": "^3.6",
+        "laravel/socialite": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
