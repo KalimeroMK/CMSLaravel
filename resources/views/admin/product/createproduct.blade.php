@@ -18,20 +18,19 @@
 				<div class="widget-body">
 					<div id="horizontal-form">
 
-						{{ Form::model('product', array('route' => array('admin.product.store'), 'method' => 'POST', 'files'=>true)) }} 
+						{{ Form::model('product', array('route' => array('admin.product.store'), 'method' => 'POST', 'files'=>true)) }}
 						{!! csrf_field() !!}
 
 
 						<div class="input-group{{ $errors->has('image') ? ' has-error' : '' }}">
-							<span class="input-group-btn">
-								<span class="btn btn-info shiny btn-file">
-									<i class="btn-label fa fa-image"> </i> Browse... <input type="file" name="image">
+							<span class="input-group-btn"><br>
+								<span>
+									Browse... <input type="file" name="image">
 								</span>
 							</span>
-							<input type="text" class="form-control" readonly="">
 						</div>
 						<br />
-							@if ($errors->has('image')) <p class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
+						@if ($errors->has('image')) <p class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
 						<div class="form-group">
 							<label for="title">Title</label>
@@ -45,7 +44,7 @@
 
 							<select name="category" id="category" class="form-control">
 								@foreach ($categories as $category)
-					<option value="{{ $category->id }}">@for ($i = 0; $i < $category->depth; $i++) - @endfor {{ $category->name }}</option>
+								<option value="{{ $category->id }}">@for ($i = 0; $i < $category->depth; $i++) - @endfor {{ $category->name }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -77,18 +76,17 @@
 							<label>Workflow: </label>
 							@foreach($workflows as $workflow)
 							<label>
-								<input name="workflow_id" type="radio" class="form-control {{ $workflow->color }}" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+								<input name="workflow_id" type="radio" class="form-check-input {{ $workflow->color }}" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
 								<span class="text"> {{ $workflow->name }}</span>
 							</label>
 							@endforeach
 						</div>
 
-
 						<!-- Hidden inputs -->
 
 						<input type="hidden" name="creator" value="{{ Auth::user()->id  }}">
 
-						<button type="submit" class="btn btn-labeled shiny btn-warning btn-large"><i class="btn-label fa fa-plus"></i> Create</button>
+						<button type="submit" class="btn btn-labeled"><i class="btn-label fa fa-plus"></i> Create</button>
 						{!! Form::close() !!}
 
 
