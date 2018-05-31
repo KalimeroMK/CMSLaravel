@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category as Category;
+use App\Cities as Cities;
+use App\Country as Country;
+use App\Neighborhood as Neighborhood;
 use App\Product as Product;
 use App\User as User;
 use App\Workflow as Workflow;
@@ -30,10 +33,13 @@ class ProductsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		$categories = Category::get();
-		$users      = User::get();
-		$workflows  = Workflow::orderBy('id', 'desc')->get();
-		$data       = ['categories' => $categories, 'users' => $users, 'workflows' => $workflows];
+		$categories   = Category::get();
+		$countries    = Country::get();
+		$cities       = Cities::get();
+		$neighborhood = Neighborhood::get();
+		$users        = User::get();
+		$workflows    = Workflow::orderBy('id', 'desc')->get();
+		$data         = ['neighborhood' => $neighborhood, 'cities' => $cities, 'categories' => $categories, 'countries' => $countries, 'users' => $users, 'workflows' => $workflows];
 		return view('admin.product.createproduct')->with($data);
 	}
 
@@ -48,6 +54,7 @@ class ProductsController extends Controller {
 				'title'       => 'required|max:255',
 				'description' => 'required',
 				'image'       => 'required',
+
 			]);
 
 		if ($errors       ->fails()) {
@@ -130,11 +137,14 @@ class ProductsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		$product    = Product::FindOrFail($id);
-		$categories = Category::get();
-		$users      = User::get();
-		$workflows  = Workflow::orderBy('id', 'desc')->get();
-		$data       = ['product' => $product, 'categories' => $categories, 'users' => $users, 'workflows' => $workflows];
+		$product      = Product::FindOrFail($id);
+		$categories   = Category::get();
+		$countries    = Country::get();
+		$cities       = Cities::get();
+		$neighborhood = Neighborhood::get();
+		$users        = User::get();
+		$workflows    = Workflow::orderBy('id', 'desc')->get();
+		$data         = ['product' => $product, 'neighborhood' => $neighborhood, 'cities' => $cities, 'categories' => $categories, 'countries' => $countries, 'users' => $users, 'workflows' => $workflows];
 		return view('admin.product.editproduct')->with($data);
 	}
 
@@ -218,16 +228,14 @@ class ProductsController extends Controller {
 	public function destroy($id) {
 		$product = Product::FindOrFail($id);
 
-		if ($product->image) {
-			// Delete blog images
-			$image       = public_path().'/assets/img/products/'.$product->image;
-			$imagemedium = public_path().'/assets/img/products/medium/'.$product->image;
-			$imagethumb  = public_path().'/assets/img/products/thumbnails/'.$product->image;
+		// Delete blog images
+		$image       = public_path().'/assets/img/products/'.$product->image;
+		$imagemedium = public_path().'/assets/img/products/medium/'.$product->image;
+		$imagethumb  = public_path().'/assets/img/products/thumbnails/'.$product->image;
 
-			unlink($image);
-			unlink($imagemedium);
-			unlink($imagethumb);
-		}
+		unlink($image);
+		unlink($imagemedium);
+		unlink($imagethumb);
 
 		$product->delete();
 		return redirect('/admin/product');

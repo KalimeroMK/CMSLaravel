@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <div class="page-body">
-    @if($users->role == 'admin')
     <div class="row">
         <div class="col-lg-offset-1 col-sm-offset-1 col-lg-10 col-sm-12 col-xs-12">
 
@@ -21,18 +20,18 @@
                         {{ Form::model('settings', array('route' => array('admin.settings.store'), 'method' => 'POST', 'files'=>true)) }}
 
                         <div class="input-group{{ $errors->has('logo') ? ' has-error' : '' }}">
-                         <span class="input-group-btn"><br>
+                           <span class="input-group-btn"><br>
                             <span>
-                               Избери лого... <input type="file"
-                               name="logo">
-                           </span>
-                       </span>
-                   </div>
-                   <br/>
-                   @if ($errors->has('logo')) <p
-                   class="alert alert-danger">{{ $errors->first('logo') }}</p> @endif
+                             Избери лого... <input type="file"
+                             name="logo">
+                         </span>
+                     </span>
+                 </div>
+                 <br/>
+                 @if ($errors->has('logo')) <p
+                 class="alert alert-danger">{{ $errors->first('logo') }}</p> @endif
 
-                   <div class="form-group">
+                 <div class="form-group">
                     <label for="title">Наслов на страната</label>
                     <input type="text" name="title" class="form-control"></input>
                 </div>
@@ -182,9 +181,6 @@
             </div>
         </div>
     </div>
-    @else
-    Nemate previlegii
-    @endif
 </div>
 
 @endsection
