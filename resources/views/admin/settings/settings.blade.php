@@ -20,18 +20,18 @@
                         {{ Form::model('settings', array('route' => array('admin.settings.store'), 'method' => 'POST', 'files'=>true)) }}
 
                         <div class="input-group{{ $errors->has('logo') ? ' has-error' : '' }}">
-                           <span class="input-group-btn"><br>
+                         <span class="input-group-btn"><br>
                             <span>
-                             Избери лого... <input type="file"
-                             name="logo">
-                         </span>
-                     </span>
-                 </div>
-                 <br/>
-                 @if ($errors->has('logo')) <p
-                 class="alert alert-danger">{{ $errors->first('logo') }}</p> @endif
+                               Избери лого... <input type="file"
+                               name="logo">
+                           </span>
+                       </span>
+                   </div>
+                   <br/>
+                   @if ($errors->has('logo')) <p
+                   class="alert alert-danger">{{ $errors->first('logo') }}</p> @endif
 
-                 <div class="form-group">
+                   <div class="form-group">
                     <label for="title">Наслов на страната</label>
                     <input type="text" name="title" class="form-control"></input>
                 </div>
@@ -153,14 +153,15 @@
 
 
                     <div class="form-group">
-                        <label>Workflow: </label>
+                        <p>Workflow: </p>
                         @foreach($workflows as $workflow)
-                        <label>
-                            <input name="workflow_id" type="radio"
-                            class="form-control {{ $workflow->color }}" value="{{ $workflow->id }}"
-                            @if($workflow->id  == 1) checked @endif>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="workflow_id" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+                            </label>
                             <span class="text"> {{ $workflow->name }}</span>
-                        </label>
+                        </div>
+
                         @endforeach
                     </div>
 

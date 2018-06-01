@@ -24,19 +24,19 @@
 
 
                         <div class="input-group{{ $errors->has('image') ? ' has-error' : '' }}">
-                         <span>
+                           <span>
                             <span class=" btn-file">
-                               Избери слика... <input type="file"
-                               name="image">
-                           </span>
-                       </span>
-                   </div>
-                   <br/>
-                   @if ($errors->has('image')) <p
-                   class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
+                             Избери слика... <input type="file"
+                             name="image">
+                         </span>
+                     </span>
+                 </div>
+                 <br/>
+                 @if ($errors->has('image')) <p
+                 class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
 
-                   <div class="form-group">
+                 <div class="form-group">
                     <label for="user">Уредник</label>
                     <select name="user_id" id="user" class="form-control">
                         @foreach ($users as $user)
@@ -49,17 +49,16 @@
 
 
                     <div class="form-group">
-                        <label>Workflow: </label>
+                        <p>Workflow: </p>
                         @foreach($workflows as $workflow)
-                        <label>
-                            <input name="workflow_id" type="radio"
-                            class="form-control {{ $workflow->color }}" value="{{ $workflow->id }}"
-                            @if($workflow->id  == 1) checked @endif>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="workflow_id" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+                            </label>
                             <span class="text"> {{ $workflow->name }}</span>
-                        </label>
+                        </div>
+
                         @endforeach
-
-
                     </div>
 
 

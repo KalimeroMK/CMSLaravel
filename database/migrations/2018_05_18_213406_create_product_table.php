@@ -10,32 +10,28 @@ class CreateProductTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('product', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('title');
-			$table->string('slug');
-			$table->string('image');
-			$table->string('imagemedium');
-			$table->string('imagethumb');
-			$table->integer('category')->unsigned();
-			$table->text('description', 65535);
-			$table->integer('user_id')->unsigned();
-			$table->integer('workflow_id');
-			$table->timestamps();
-		});
+	public function up() {
+		Schema::create('product', function (Blueprint $table) {
+				$table->increments('id');
+				$table->string('title');
+				$table->string('slug');
+				$table->string('image');
+				$table->string('imagemedium');
+				$table->string('imagethumb');
+				$table->integer('category')->unsigned();
+				$table->text('description', 65535);
+				$table->integer('user_id')->unsigned();
+				$table->integer('workflow_id');
+				$table->timestamps();
+			});
 	}
-
 
 	/**
 	 * Reverse the migrations.
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('product');
 	}
 

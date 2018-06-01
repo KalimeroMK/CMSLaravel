@@ -35,19 +35,20 @@
 
                         <div class="input-group{{ $errors->has('image') ? ' has-error' : '' }}">
                             <span class="input-group-btn">
-                                <span class="btn btn-info shiny btn-file">
-                                    <i class="btn-label fa fa-image"> </i> Browse... <input type="file" name="image">
+                                <span>
+                                    Browse... <input type="file" name="image">
                                 </span>
                             </span>
-                            <input type="text" class="form-control" readonly="">
                         </div>
                         <br/>
                         @if ($errors->has('image')) <p
                         class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <textarea class="ckeditor" id="title" name="title">{{ $product->title }}</textarea>
+                        <div class="form-group row">
+                            <label for="title" class="col-2 col-form-label">Title</label>
+                            <div class="col-12">
+                                <input class="form-control" type="text" value="{{ $product->title }}" name="title" id="title">
+                            </div>
                         </div>
                         @if ($errors->has('title')) <p
                         class="alert alert-danger">{{ $errors->first('title') }}</p> @endif
@@ -105,17 +106,16 @@
 
 
                     <div class="form-group">
-                        <label>Workflow: </label>
+                        <p>Workflow: </p>
                         @foreach($workflows as $workflow)
-                        <label>
-                            <input name="workflow_id" type="radio"
-                            class="form-control {{ $workflow->color }}" value="{{ $workflow->id }}"
-                            @if($workflow->id  == $product->workflow_id) checked @endif>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="workflow_id" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+                            </label>
                             <span class="text"> {{ $workflow->name }}</span>
-                        </label>
+                        </div>
+
                         @endforeach
-
-
                     </div>
 
                     <button type="submit" class="btn btn-labeled shiny btn-info btn-large"><i

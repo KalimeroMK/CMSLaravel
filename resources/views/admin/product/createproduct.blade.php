@@ -32,9 +32,11 @@
 						<br />
 						@if ($errors->has('image')) <p class="alert alert-danger">{{ $errors->first('image') }}</p> @endif
 
-						<div class="form-group">
-							<label for="title">Title</label>
-							<textarea class="ckeditor" id="title" name="title"></textarea>
+						<div class="form-group row">
+							<label for="title" class="col-2 col-form-label">Title</label>
+							<div class="col-12">
+								<input class="form-control" type="text" name="title" id="title">
+							</div>
 						</div>
 						@if ($errors->has('title')) <p class="alert alert-danger">{{ $errors->first('title') }}</p> @endif
 
@@ -71,6 +73,7 @@
 						</select>
 					</div>
 					@if ($errors->has('cities')) <p class="alert alert-danger">{{ $errors->first('cities') }}</p> @endif
+					<br>
 					<label for="neighborhood">Neighborhood</label>
 
 					<select name="neighborhood" id="neighborhood" class="form-control">
@@ -81,12 +84,17 @@
 					</select>
 				</div>
 				@if ($errors->has('neighborhood')) <p class="alert alert-danger">{{ $errors->first('neighborhood') }}</p> @endif
-
+				<br>
 				<div class="form-group">
 					<label for="description">Product description</label>
 					<textarea class="ckeditor" id="elm3" name="description"></textarea>
 				</div>
 				@if ($errors->has('description')) <p class="alert alert-danger">{{ $errors->first('description') }}</p> @endif
+				<div class="form-group">
+					<label for="tags">Tags: </label>
+					<input type="text" data-role="tagsinput" name="keywords" value="page, static">
+				</div>
+				@if ($errors->has('keywords')) <p class="alert alert-danger">{{ $errors->first('keywords') }}</p> @endif
 
 
 
@@ -102,12 +110,15 @@
 
 
 				<div class="form-group">
-					<label>Workflow: </label>
+					<p>Workflow: </p>
 					@foreach($workflows as $workflow)
-					<label>
-						<input name="workflow_id" type="radio" class="form-check-input {{ $workflow->color }}" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+							<input type="checkbox" class="form-check-input" name="workflow_id" value="{{ $workflow->id }}" @if($workflow->id  == 1) checked @endif>
+						</label>
 						<span class="text"> {{ $workflow->name }}</span>
-					</label>
+					</div>
+
 					@endforeach
 				</div>
 
